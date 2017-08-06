@@ -1,0 +1,48 @@
+1. Installation
+    - npm init -y
+        - update main file to your entry filename
+    - npm install express --save
+    - npm install -g nodemon
+        - console "nodemon" will run your package's main file
+2. Templates
+    - npm install pug --save
+    - app.set('view engine', 'pug')
+        - by default express will look for templates in /views
+        - .set('views', __dirname+'/templates') to change the name to templates
+    - temlates are sueful for writing and reusing html
+3. Routing
+    - in node to require an index.js, jusr require its folder
+    - express.Router()
+    - /: creates a variable (/:id for example)
+    - req.params.id to access the param
+    - ?key=value is a query string
+    - ?key=value&key2=value2 is a chained query string
+        - req.query.myPropery to access the key
+        - queries are useful for sending info to the server
+4. Static Assets
+    - .use('/static', express.static(__dirname+'/public')) 
+    - reference /static/ in your templates
+    - static files are executed by the client
+5. Middleware
+    -  middleware structure (req, res, next) => { // dosomething(); next(); }
+        - app.use((req, res, next) => {}) to run on every route
+        - app.use('/myRoute', (req, res, next) => {}) to run on specific route
+        - app.get to only run on get requests
+        - app.use('/special', func(), func()) to run multiple functions on a route
+        - functions are run in the order they appear
+        - end a middleware by sending next() or sending a response like res.render()
+        - the entire app before .listen is actually all middleware
+        - next(myErr) throws an error
+            - (err, req, res, next) express will jump to this after next(myErr)
+    - npm install body-parser --save
+        - body-parser reads in chunks of incoming data sent to the server
+        - bodyParser = require('body-parser')
+        - .use(bodyParser.urlencoded({extended: false}))
+        - .post('/hello', (req, res) => {
+            res.render('hello', { name: req.body.username });
+        })
+    - res.redirect() are useful for moving the client to a different url
+    - npm install cookie-parser --save
+        - cookieParser = require('cookie-parser')
+        - .use(cookieParser())
+        - cookies are useful for storing state for the client

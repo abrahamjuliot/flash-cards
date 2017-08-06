@@ -1,0 +1,32 @@
+const
+  express = require('express'),
+  router = express.Router();
+
+router
+  .get('/', (req, res) => {
+      const name = req.cookies.username;
+      if (name) {
+          res.render('index', { name }); // es6 { name: name }
+      } else {
+          res.redirect('/hello');
+      }
+  })
+  .get('/hello', (req, res) => {
+      const name = req.cookies.username;
+      if (name) {
+          res.redirect('/');
+      } else {
+          res.render('hello');
+      }
+  })
+  
+  .post('/hello', (req, res) => {
+      res.cookie('username', req.body.username);
+      res.redirect('/');
+  })
+  .post('/goodbye', (req, res) => {
+      res.clearCookie('username');
+      res.redirect('/hello');
+  })
+
+module.exports = router;

@@ -1,0 +1,24 @@
+extends layout.pug
+
+block content
+  section.flashcards
+    .card(class=`card-${side}`)
+      .card-header
+        h1.card-title #{side}
+      #content
+        h2= text
+        if hint
+          p#hint
+            i Hint: #{hint}
+      if side === 'answer'
+        .card-flip-wrap
+          a(href=`${id}?side=question`)
+            img.card-flip(src='/static/img/flip.svg')
+      else
+        .card-flip-wrap
+          a(href=`${id}?side=answer`)
+            img.card-flip(src='/static/img/flip.svg')
+          
+      .card-next
+        a(href='/cards')
+          img(src='/static/img/next.svg')
